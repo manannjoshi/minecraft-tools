@@ -12,7 +12,6 @@ int main(){
     int y1;
     int y2;
     int blocks;
-    std::string prompt;
     std::cout << "=========================" << '\n';
     std::cout << "Minecraft tools" << '\n';
     std::cout << "1) Block Calculator" << std::endl
@@ -24,6 +23,7 @@ int main(){
             std::cout << "=========================" << '\n';
             std::cout << "Selected - BLOCK CALCULATOR" << '\n';
             int distance = calculateBlocks(x1,y1,x2,y2);
+            std::cout << "Total Blocks between " << x1 << "," << y1 << "," << " and " << x2 << "," << y2 << " are: ";
             std::cout << distance << '\n';
         }
         else if(choice==2){
@@ -68,10 +68,5 @@ int calculateBlocks(int x1, int y1, int x2, int y2){
     x2 = getValidNum("Enter X co-ordinate of the final place >>> ");
     y2 = getValidNum("Enter Y co-ordinate of the final place >>> ");
     int distance = round(sqrt(pow(x2-x1,2) + pow(y2-y1,2)));
-    std::cout << "Total Blocks between " << x1 << "," << y1 << "," << " and " << x2 << "," << y2 << " are: ";
     return distance;
-}
-
-int railwayCalculate(int blocks){
-    
 }
