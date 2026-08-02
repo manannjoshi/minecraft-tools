@@ -2,71 +2,84 @@
 #include <cmath>
 #include <string>
 
-int getValidNum(std::string prompt);
-int calculateBlocks(int x1, int y1, int x2, int y2);
+int getValidNumber(std::string prompt);
+int calculateDistance();
 
-int main(){
+int main() {
     int choice;
-    int x1;
-    int x2;
-    int y1;
-    int y2;
-    int blocks;
+
     std::cout << "=========================" << '\n';
-    std::cout << "Minecraft tools" << '\n';
-    std::cout << "1) Block Calculator" << std::endl
-              << "2) Railway Calculator" << std::endl;
-    while(true){
-        std::cout << "=========================" << '\n';
-        choice = getValidNum("Enter your choice >>> ");
-        if(choice==1){
+    std::cout << "   MINECRAFT TOOLS" << '\n';
+    std::cout << "=========================" << '\n';
+    std::cout << "1) Block Calculator" << '\n'
+              << "2) Railway Calculator" << '\n';
+    std::cout << "=========================" << '\n';
+
+    while (true) {
+        choice = getValidNumber("Enter your choice >>> ");
+
+        if (choice == 1) {
             std::cout << "=========================" << '\n';
             std::cout << "Selected - BLOCK CALCULATOR" << '\n';
-            int distance = calculateBlocks(x1,y1,x2,y2);
-            std::cout << "Total Blocks between " << x1 << "," << y1 << "," << " and " << x2 << "," << y2 << " are: ";
-            std::cout << distance << '\n';
+            std::cout << "=========================" << '\n';
+
+            int distance = calculateDistance();
+            std::cout << "Distance: " << distance << " blocks" << '\n';
         }
-        else if(choice==2){
+        else if (choice == 2) {
             std::cout << "=========================" << '\n';
             std::cout << "Selected - RAILWAY CALCULATOR" << '\n';
             std::cout << "=========================" << '\n';
-            blocks = getValidNum("Enter total number of blocks >>> ");
-            int poweredRails = blocks/8;
-            int normalRails = blocks - (poweredRails);
-            std::cout << "Total rails : " << normalRails/64 << " stack and " << normalRails%64 << " blocks" <<'\n';
-            std::cout << "Total powered rails " << poweredRails/64 << " stack and " << poweredRails%64 << " blocks" << '\n';
+
+            int totalBlocks = getValidNumber("Enter total number of blocks >>> ");
+
+            int poweredRailCount = totalBlocks / 8;
+            int normalRailCount  = totalBlocks - poweredRailCount;
+
+            std::cout << "Total rails:         " << normalRailCount / 64 << " stacks and " << normalRailCount % 64 << " blocks" << '\n';
+            std::cout << "Total powered rails: " << poweredRailCount / 64 << " stacks and " << poweredRailCount % 64 << " blocks" << '\n';
         }
-        else{
+        else {
             std::cout << "Invalid choice." << '\n';
         }
+
+        std::cout << "=========================" << '\n';
     }
 
     return 0;
 }
 
-int getValidNum(std::string prompt){
-    while(true){
-        int choice;
+int getValidNumber(std::string prompt) {
+    while (true) {
+        int number;
         std::cout << prompt;
-        std::cin >> choice;
-        if(std::cin.fail()){
+        std::cin >> number;
+
+        if (std::cin.fail()) {
             std::cin.clear();
-            std::cin.ignore(1000000,'\n');
+            std::cin.ignore(1000000, '\n');
             std::cout << "Input should be a number!" << '\n';
             continue;
         }
-        else{
-            return choice;
-        }
+
+        return number;
     }
 }
 
-int calculateBlocks(int x1, int y1, int x2, int y2){
-    std::cout << "=========================" << '\n';
-    x1 = getValidNum("Enter X co-ordinate of the initial place >>> ");
-    y1 = getValidNum("Enter Y co-ordinate of the initial place >>> ");
-    x2 = getValidNum("Enter X co-ordinate of the final place >>> ");
-    y2 = getValidNum("Enter Y co-ordinate of the final place >>> ");
-    int distance = round(sqrt(pow(x2-x1,2) + pow(y2-y1,2)));
+int calculateDistance() {
+    int startX;
+    int startY;
+    int endX;
+    int endY;
+
+    startX = getValidNumber("Enter X co-ordinate of the starting point >>> ");
+    startY = getValidNumber("Enter Y co-ordinate of the starting point >>> ");
+    endX   = getValidNumber("Enter X co-ordinate of the ending point   >>> ");
+    endY   = getValidNumber("Enter Y co-ordinate of the ending point   >>> ");
+
+    int distance = round(sqrt(pow(endX - startX, 2) + pow(endY - startY, 2)));
+
+    std::cout << "Total blocks between (" << startX << ", " << startY << ") and ("
+              << endX << ", " << endY << ") are: ";
     return distance;
 }
