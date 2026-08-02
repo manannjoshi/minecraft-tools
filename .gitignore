@@ -2,3 +2,6 @@
 *.exe
 *.o
 *.out
+
+# build directory
+build/
