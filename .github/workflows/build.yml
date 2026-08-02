@@ -18,10 +18,13 @@ jobs:
         include:
           - os: ubuntu-latest
             binary: build/minecraft-tools
+            out: minecraft-tools-linux
           - os: macos-latest
             binary: build/minecraft-tools
+            out: minecraft-tools-macos
           - os: windows-latest
             binary: build/Release/minecraft-tools.exe
+            out: minecraft-tools-windows.exe
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
@@ -29,11 +32,14 @@ jobs:
         run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
       - name: Build
         run: cmake --build build --config Release
+      - name: Stage binary
+        run: cp "${{ matrix.binary }}" "${{ matrix.out }}"
+        shell: bash
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: minecraft-tools-${{ matrix.os }}
-          path: ${{ matrix.binary }}
+          name: ${{ matrix.out }}
+          path: ${{ matrix.out }}
           if-no-files-found: error
 
   release:
