@@ -8,23 +8,30 @@ int calculateDistance();
 
 int main() {
     int choice;
+    int blocks;
 
     std::cout << "=======================================" << '\n';
     std::cout << "          MINECRAFT TOOLS" << '\n';
     std::cout << "=======================================" << '\n';
     std::cout << "  [1] Block Calculator" << '\n'
-              << "  [2] Railway Calculator" << '\n';
+              << "  [2] Railway Calculator" << '\n'
+              << "  [3] Stack Converter" << '\n'
+              << "  [4] Exit" << '\n';
     std::cout << "=======================================" << '\n';
 
     while (true) {
         choice = getValidNumber("Enter your choice >>> ");
+        if (choice == 0 || choice == 4) {
+            std::cout << "  Goodbye!" << '\n';
+            break;
+        }
 
         if (choice == 1) {
             std::cout << "=======================================" << '\n';
             std::cout << "          BLOCK CALCULATOR" << '\n';
             std::cout << "=======================================" << '\n';
 
-            int distance = calculateDistance();
+            calculateDistance();
         }
         else if (choice == 2) {
             std::cout << "=======================================" << '\n';
@@ -38,6 +45,25 @@ int main() {
 
             std::cout << "  Normal rails : " << normalRailCount / 64 << " stacks and " << normalRailCount % 64 << " blocks" << '\n';
             std::cout << "  Powered rails: " << poweredRailCount / 64 << " stacks and " << poweredRailCount % 64 << " blocks" << '\n';
+        }
+        else if (choice == 3) {
+            std::cout << "=======================================" << '\n';
+            std::cout << "          STACK CONVERTER" << '\n';
+            std::cout << "=======================================" << '\n';
+
+            blocks = getValidNumber("Enter number of blocks you have >>> ");
+
+            int stacks    = blocks / 64;
+            int remainder = blocks % 64;
+
+            std::cout << "  Stacks : " << stacks;
+            if (remainder > 1) {
+                std::cout << " and " << remainder << " blocks";
+            }
+            else if (remainder == 1) {
+                std::cout << " and " << remainder << " block";
+            }
+            std::cout << '\n';
         }
         else {
             std::cout << "  Invalid choice." << '\n';
@@ -56,6 +82,10 @@ int getValidNumber(std::string prompt) {
 
         std::cout << prompt;
         std::getline(std::cin, input);
+
+        if (input == "exit" || input == "Exit" || input == "EXIT") {
+            return 0;
+        }
 
         std::istringstream stream(input);
         if (!(stream >> number) || !(stream >> std::ws).eof()) {
